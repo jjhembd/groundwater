@@ -1,5 +1,5 @@
-We have 900k lithology descriptions in OK, 3.8m in TX. That's likely less
-than half of the total--many are still in scanned, handwritten documents.
+We have 900k lithology descriptions in OK, 3.8m in TX. That's likely less than
+half of the total&mdash;many are still in scanned, handwritten documents.
 Note the effort: a busy driller in his coveralls, takes time to clean his
 hands, and pick up pencil and paper to note:
 
@@ -59,6 +59,7 @@ Looking deeper, we can see that there are really 5 things being described:
 - Color
 - Strength (how solid/crumbly)
 - Wetness
+
 Now there is some overlap: for example, the words 'clay', 'silt', 'sand'
 are describing different grain sizes, but we assume clay and sand are probably
 also different minerals. So by 'Grain size', we mean only words like 'fine',
