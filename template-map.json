@@ -1,0 +1,14 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [-103.03916669999995, 36.493333300000074]
+  },
+  "properties": {
+    "State": "TX",
+    "ID": "0140301",
+    "Depth": 485,
+    "Date": "1974-12-23",
+    "Company": ""
+  }
+}

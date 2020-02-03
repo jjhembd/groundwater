@@ -1,0 +1,30 @@
+## Character encoding
+SDRDownload files are encoded in CP1252 / MS-ANSI / Windows-1252.
+A few fields have curly single quotes. These show up in vim as highlighted
+<92>. They also confuse grep ("Binary file ... matches").
+To fix them, convert to UTF-8:
+iconv -f cp1252 -t utf8 input.txt > input-fixed-encoding.txt
+See https://superuser.com/a/199872/1107869
+
+Update: use sdr/fix-encoding.bash. Output to fix-encoding directory
+
+## Problems with fix-encoding/WellData.txt
+One line has a bunch of fields filled with double quotes: |"|"|"|...
+presumably meant as ditto marks. This confuses Pandas... To fix it:
+pandas.read_csv(file, delimiter='|', quote=3)
+This turns of all quoting of delimiters.
+
+Several fields include pipe characters. To check for false delimiters:
+awk -F '|' '{print NF-1, NR, $0}' WellData.txt | awk '{if ($1 != 72) print}'
+First field in output is the number of delimiters, 2nd is the line number
+
+Lines with bad delimiter count: fix-encoding/WellData_bad-delimiters.txt
+
+To fix them: check the report PDF for extra pipe characters. The report URL:
+https://www2.twdb.texas.gov/apps/waterdatainteractive/GetReports.aspx?Num=<WellReportTrackingNumber>&Type=SDR-Well
+Then manually edit the file. Edited output:
+fix-encoding/WellData_fix-delimiters.txt
+
+Delimiter problems in WellLithology.txt are easier to figure out.
+awk -F '|' '{print NF-1, NR, $0}' WellLithology.txt | awk '{if ($1 != 4) print}' > WellLithology_bad-delimiters.txt
+Fixed file: WellLithology_fix-delimiters.txt

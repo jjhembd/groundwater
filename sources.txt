@@ -1,0 +1,27 @@
+TX: Submitted Drillers' Reports (SDR). Pipe-delimited file, updated nightly
+http://www.twdb.texas.gov/groundwater/data/SDRDownload.zip
+
+Note: there is also the GroundWater Database (GWDB) which we are not using yet
+http://www.twdb.texas.gov/groundwater/data/GWDBDownload.zip
+Also, there are old reports from the Texas Commission on Environmental Quality.
+These are scanned, handwritten documents--800,000 of them!
+See http://www.twdb.texas.gov/groundwater/data/index.asp, and
+http://www.twdb.texas.gov/groundwater/data/doc/WellRecordsPieChartMay2013.pdf
+
+OK: Updated monthly. ESRI File Geodatabase
+www.owrb.ok.gov/maps/data/layers/Groundwater/Well_Logs.zip
+
+LA: Zipped Shapefile
+http://sonris-www.dnr.state.la.us/gis/agsweb/arcgisserver/arcgisoutput/extData/shp/WATER_WELL_REG.zip
+Info (?) at: http://sonris-www.dnr.state.la.us/gis/dnld/download.html
+
+AR: Awkward search interface...
+https://wise.er.usgs.gov/driller_db/
+
+NM: Scanned handwriting:
+https://www.ose.state.nm.us/WRAB/NRG_Logs.php
+See also:
+http://geospatialdata-ose.opendata.arcgis.com/datasets/ose-points-of-diversion
+
+AZ: map search, no log visible?
+https://gisweb3.azwater.gov/WellReg

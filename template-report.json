@@ -1,0 +1,26 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [-103.03916669999995, 36.493333300000074]
+  },
+  "properties": {
+    "Longitude": "-103.03916669999995",
+    "Latitude": "36.493333300000074",
+    "State": "TX",
+    "County": "Dallam",
+    "ID": "0140301",
+    "Elevation": 4702,
+    "Depth": 485,
+    "Lithology": [
+      [0, 25, "Top Soil, Caliche and Sand"],
+      [60, 85, "Clay"],
+      [85, 145, "Medium Sand"]
+    ],
+    "Owner": "Poole Chemical Company Danny Poole",
+    "Usage": "Irrigation",
+    "Date": "1974-12-23",
+    "Company": "",
+    "Driller": ""
+  }
+}

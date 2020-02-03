@@ -1,0 +1,49 @@
+To check a tile: convert a .pbf to geojson and count features.
+~/modules/vt2geojson/vt2geojson t01_default/0/0/0.pbf
+
+The tile 6/14/26 covers most of Texas. It should have lots of features.
+
+First test: output t01_default
+# tippecanoe -e t01_default ../sdr_merge.geojson
+Result: tile 6/14/26 is too sparse
+
+t02: limit max zoom to 13
+tippecanoe -z 13 -e t02_z13 ../sdr_merge.geojson
+Result: better, still too sparse
+
+t03: max zoom 12
+tippecanoe -z 12 -e t02_z12 ../sdr_merge.geojson
+Density about right. Question: does zoom 12 include everything?
+
+t04: Follow the "Try this first" suggestion from the README at
+https://github.com/mapbox/tippecanoe.
+tippecanoe -zg -e t04_zg --drop-densest-as-needed ../sdr_merge.geojson
+The printout says it's still dropping at zoom 8. And tiles are huge: >400KB!
+
+t05: Like t04, but limit max tile size to 100KB, and extend to bigger zooms
+until no more dropping
+tippecanoe -zg -e t05_zg_ae_max100KB --drop-densest-as-needed \\
+  --extend-zooms-if-still-dropping -M 100000 ../sdr_merge.geojson
+Guessed maximum zoom is 8, but ends up extending to zoom 14
+The 6-14-26 tile looks too uniform: we have lost all the density patterns
+
+t06: Set zoom to 10 for initial decimation setting, but allow bigger zooms
+if needed.
+tippecanoe -z 10 -e t06_z10_ae_max100KB --drop-densest-as-needed \\
+  --extend-zooms-if-still-dropping -M 100000 ../sdr_merge.geojson
+Slight improvement in density variation, but still too uniform & sparse
+
+t07: Set zoom to 11 (expandable), increase size limit to 150KB
+tippecanoe -z 11 -e t07_z11_ae_max150KB --drop-densest-as-needed \\
+  --extend-zooms-if-still-dropping -M 150000 ../sdr_merge.geojson
+Looks reasonable? Mapbox tileset ID: jhembd.6oh2rpcv
+After loading to Globelet: sparse areas are missing wells until you
+zoom way in.
+
+t08: Set zoom to 10, limit 'resolution' of tile (what does this mean??),
+use 'gamma' to thin out dense spots, increase limit to 200KB
+tippecanoe -e t08_z11_ae_max200KB -z 10 -d 9 -D 9 -g 2 -M200000 \\
+  --drop-densest-as-needed --extend-zooms-if-still-dropping ../sdr_merge.geojson
+NOTE: coordinates are rounded to nearest pixel? The 'resolution' is actually
+coordinate precision!?!!! The file size is also much smaller, so who knows
+what other strange things tippecanoe is doing.
