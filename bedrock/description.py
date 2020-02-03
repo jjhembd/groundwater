@@ -10,7 +10,7 @@ def fixdescription(description):
         return 'topsoil'
     if lc_desc in ['r b']:
         return 'redbed'
-    if lc_desc in ['not avail.', 'none', 'none obtained', 'not reported', 'no lith obtained']:
+    if lc_desc in ['na', 'not avail.', 'n0ne', 'none', 'none.', 'none obtained', 'no data', 'not reported', 'no lith obtained', 'no lithology', 'no log', 'no logs taken', 'no lith avail.', 'no samples', 'unavailable']:
         return 'INVALID'
 
     words = lc_desc.split()
