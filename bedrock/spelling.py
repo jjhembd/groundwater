@@ -3,7 +3,7 @@ def fixspelling(word):
     # Grain size words
     if word in ['sml']:
         word = 'small'
-    elif word in ['fien', 'fein']:
+    elif word in ['fien', 'fein', 'fin']:
         word = 'fine'
     elif word in ['med', 'med.', 'meduim', 'mediu']:
         word = 'medium'
@@ -24,7 +24,7 @@ def fixspelling(word):
         word = 'light'
     elif word in ['wht', 'whtie', 'wgite']:
         word = 'white'
-    elif word in ['darl', 'drk', 'dk.', 'dk']:
+    elif word in ['darl', 'drk.', 'drk', 'dk.', 'dk']:
         word = 'dark'
     elif word in ['blakc', 'blk']:
         word = 'black'
@@ -32,7 +32,7 @@ def fixspelling(word):
         word = 'gray'
     elif word in ['rd']:
         word = 'red'
-    elif word in ['redish', 'reddist', 'redsih']:
+    elif word in ['redish', 'redish.', 'reddist', 'redsih', 'rdish']:
         word = 'reddish'
     elif word in ['pnk']:
         word = 'pink'
@@ -46,13 +46,13 @@ def fixspelling(word):
         word = 'yellowish'
 
     # Surface materials
-    elif word in ['urface']:
+    elif word in ['urface', 'surf', 'surfae']:
         word = 'surface'
     elif word in ['ashphault', 'asphault']:
         word = 'asphalt'
     elif word in ['aggergate']:
         word = 'aggregate'
-    elif word in ['cocncrete']:
+    elif word in ['cocncrete', 'conrete', 'concret']:
         word = 'concrete'
     elif word in ['ropsoil', 'topaoil', 'topsoi;', 'topsil', 'opsoil', 'topsoils', 'tosoil']:
         word = 'topsoil'
@@ -62,7 +62,7 @@ def fixspelling(word):
         word = 'soil'
     elif word in ['subsiol', 'subsoi;']:
         word = 'subsoil'
-    elif word in ['oberburden', 'overbirden', 'overbuden', 'overburde', 'overburdon', 'overdurden', 'ovrburden']:
+    elif word in ['oberburden', 'obverburden', 'overbirden', 'overbuden', 'overburde', 'overburdon', 'overdurden', 'ovrburden']:
         word ='overburden'
 
     # Unconsolidated
@@ -70,7 +70,7 @@ def fixspelling(word):
         word = 'clay'
     elif word in ['clayee']:
         word = 'clayey'
-    elif word in ['saand', 'sadn', 'snd', 'samd', 'sans', 'snad', 'sabd', 'sandd', 'sand.']:
+    elif word in ['asnd', 'saand', 'sadn', 'snd', 'samd', 'sans', 'snad', 'sabd', 'sandd', 'sand.']:
         word = 'sand'
     elif word in ['andy', 'sandt', 'sandu', 'sany', 'snady', 'sndy', 'sdy']:
         word = 'sandy'
@@ -84,26 +84,28 @@ def fixspelling(word):
         word = 'lime'
     elif word in ['limy']:
         word = 'limey'
-    elif word in ['grav', 'grave', 'gravle', 'grael', 'grvl', 'ravel']:
+    elif word in ['grav', 'grave', 'gravle', 'grael', 'gravil', 'grvl', 'ravel']:
         word = 'gravel'
     elif word in ['benetonit']:
         word = 'bentonite'
 
     # Rocks
-    elif word in ['sabdstone', 'sadstone', 'sandsstone', 'sandston', 'sandsotne', 'sandstonee', 'sandstonre', 'sadnstone', 'sandstoen', 'sanstone', 'sandtone', 'sandstoe', 'sandsone', 'sndstone', 'sndstne', 'sndst', 's.s.']:
+    elif word in ['andstone', 'sabdstone', 'sadstone', 'samdstone', 'sandsstone', 'sandston', 'sandsotne', 'sandstonee', 'sandstonre', 'sadnstone', 'sandstoen', 'sanstone', 'sandtone', 'sandstoe', 'sandsone', 'sndstone', 'sndstne', 'sndstn', 'sndst', 's.s.']:
         word = 'sandstone'
-    elif word in ['androck', 'sabdrock', 'sandrok', 'sandsrock', 'sandroack', 'sandrpck', 'sandrockk', 'sandorck', 'samdrock', 'sandrocl', 'sandrocj', 'snadrock', 'sadnrock', 'sandrokc', 'sandock', 'sanrock', 'sndrock', 'sndrck', 'sndrk']:
+    elif word in ['androck', 'sabdrock', 'sandrcok', 'sandrok', 'sandsrock', 'sandroack', 'sandrpck', 'sandrockk', 'sandorck', 'samdrock', 'sandrocl', 'sandrocj', 'snadrock', 'sadnrock', 'sandrokc', 'sandock', 'sanrock', 'sndrock', 'sndrck', 'sndrk']:
         word = 'sandrock'
     elif word in ['silstone', 'siltone', 'siltsone']:
         word = 'siltstone'
-    elif word in ['dhale', 'sjale', 'sja;e', 'shal;e', 'shjale', 'sghale', 'sgale', 'shall', 'shaell', 'shail', 'shael', 'sale', 'shalee', 'sahel', 'shlae', 'sahle', 'shalke', 'shle', 'sh']:
+    elif word in ['dhale', 'sgake', 'shal', 'sjale', 'sha;e', 'sja;e', 'shal;e', 'shjale', 'sghale', 'sgale', 'shall', 'shaell', 'shail', 'shael', 'sale', 'shalee', 'sahel', 'shlae', 'sahle', 'shalke', 'shalw', 'shle', 'sh']:
         word = 'shale'
-    elif word in ['caleche', 'calichie', 'calachie', 'calache', 'calichi', 'calicho', 'cal', 'clachie', 'cleachy', 'cleache', 'clechie', 'cleche', 'cliche', 'colechy', 'colychee', 'colichie', 'cleachie', 'claiche', 'calechi', 'calechie']:
+    elif word in ['caleche', 'calichie', 'calachie', 'calache', 'calichi', 'calicho', 'cal', 'clachie', 'cleachy', 'cleache', 'cleatche', 'clechie', 'cleche', 'cliche', 'colechy', 'colychee', 'colichie', 'cleachie', 'claiche', 'calechi', 'calechie']:
         word = 'caliche'
     elif word in ['chaulk']:
         word = 'chalk'
     elif word in ['limesstone', 'limetone', 'limestnone', 'limeston', 'limestoen', 'limstone', 'l.s.']:
         word = 'limestone'
+    elif word in ['annihydrite']:
+        word = 'anhydrite'
     elif word in ['stowe', 'stne', 'stn']:
         word = 'stone'
     elif word in ['rcok', 'rokc', 'rck']:
@@ -136,9 +138,13 @@ def fixspelling(word):
     # Strength words
     elif word in ['hd', 'hd.']:
         word = 'hard'
+    elif word in ['bloe']:
+        word = 'blow'
+    elif word in ['aluvial']:
+        word = 'alluvial'
 
     # Wetness words
-    elif word in ['wtrsnd', 'watersamd', 'watersadn', 'watersnd', 'watersnad', 'watersabd', 'watrsand']:
+    elif word in ['wtrsnd', 'wtersand', 'waterand', 'watersamd', 'watersadn', 'watersnd', 'watersnad', 'watersabd', 'watrsand', 'watesand']:
         word = 'watersand'
     elif word in ['saturated.']:
         word = 'saturated'
@@ -146,6 +152,8 @@ def fixspelling(word):
         word = 'sloppy'
     elif word in ['wtr', 'wtr.', 'wter']:
         word = 'water'
+    elif word in ['aquifier']:
+        word = 'aquifer'
 
     # Other
     elif word in ['vy']:
@@ -158,13 +166,15 @@ def fixspelling(word):
         word = 'with'
     elif word in ['unkown', 'unknonw', 'ukwn']:
         word = 'unknown'
-    elif word in ['crystalized']:
+    elif word in ['crystalized', 'crytalized']:
         word = 'crystallized'
     elif word in ['granualr']:
         word = 'granular'
-    elif word in ['qiuck']:
+    elif word in ['qiuck', 'qucik']:
         word = 'quick'
     elif word in ['crevis', 'grevice']:
         word = 'crevice'
+    elif word in ['ned', 'hed']:
+        word = 'bed'
 
     return word
