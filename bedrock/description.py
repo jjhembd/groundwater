@@ -11,13 +11,15 @@ def fixdescription(description):
         return 'topsoil'
     if lc_desc in ['r b']:
         return 'redbed'
-    if lc_desc in ['na', 'not avail.', 'not available', 'n0ne', 'non', 'none', 'none.', 'none obtained', 'none provided', 'no data obtained', 'no data', 'nd', 'not described', 'not logged', 'not reported', 'no lith obtained', 'no lithology', 'no lithology provided', 'no log', 'no logs taken', 'no lith avail.', 'no samples', 'no sample taken', 'unavailable']:
-        return 'INVALID'
 
     # Replace 'w/' abbreviations by 'with'. 
     # Note: We do not expect 'with' at the start or end of the description 
-    # Hence the negative lookbehind (?!^) and lookahead (?!$)
-    desc = re.sub(r'(?!^) w/ ?(?!$)', ' with ', lc_desc)
+    # Hence the negative lookbehind (?<!^) and lookahead (?!$)
+    desc_wquotes = re.sub(r'(?<!^) w/ ?(?!$)', ' with ', lc_desc)
+
+    # Strip out double quotes, except after digits or decimals 
+    # (keep 6" OR 6." for 6 inches)
+    desc = re.sub(r'(?<![0-9.])"', '', desc_wquotes)
 
     # Split words, keeping the separators (', ', '/', etc.) in the list
     words = re.split(r'([ /&,\-]+)', desc)
@@ -31,7 +33,15 @@ def fixdescription(description):
     if fixedwords[last] in separators: del fixedwords[last]
 
     compoundedwords = compoundwords(fixedwords)
-    return ''.join(compoundedwords)
+    fixed_desc = ''.join(compoundedwords)
+
+    # Discard rows where no lith is available
+    if fixed_desc in ['na','not available', 'none', 'none obtained', 'none provided', 'no data obtained', 'no data', 'nd', 'not described', 'not logged', 'not reported', 'no lithology', 'no lithology obtained', 'no lithology collected', 'no lithologies provided', 'no lithology description obtained', 'no lithology provided', 'no lithology available', 'not lithology available', 'no litholgy data', 'lithology not complete', 'lithology not available', 'no log', 'no logs taken', 'no samples', 'no sample taken', 'unavailable']:
+        return 'INVALID'
+    plug_regex = r'[0-9]* ?\b(overdrill|drilled|drill)\b( out)? (and|&) \b(plugged|plug|grout)\b'
+    if re.fullmatch(plug_regex, fixed_desc): return 'INVALID'
+
+    return fixed_desc
 
 def fixword(word):
     # Fix and return any word separator strings
@@ -49,7 +59,7 @@ def fixword(word):
 def compoundwords(words):
     compounds = ['sandstone', 'sandrock', 'watersand', 'quicksand',
             'limestone', 'siltstone', 'claystone', 'redbed', 'redbeds',
-            'topsoil', 'subsoil', 'bedrock']
+            'overburden', 'topsoil', 'subsoil', 'bedrock']
     i = 0
     while i < len(words) - 2:
         separator = words[i + 1]
