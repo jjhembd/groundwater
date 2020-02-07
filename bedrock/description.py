@@ -1,7 +1,7 @@
 import re
-from spelling import fixspelling
+import spelling
 
-def fixdescription(description):
+def fix(description):
     # BEWARE: description must not be a NaN!
     lc_desc = description.lower()
 
@@ -54,7 +54,7 @@ def fixword(word):
     # TODO: Don't substitute & if this is the first word (e.g., 'and stone')
     if word == 'and': return '&'
 
-    return fixspelling(word)
+    return spelling.fix(word)
 
 def compoundwords(words):
     compounds = ['sandstone', 'sandrock', 'watersand', 'quicksand',

@@ -1,5 +1,5 @@
 # Fix common mis-spellings
-def fixspelling(word):
+def fix(word):
     # Grain size words
     if word in ['samll', 'sml', 'sm']:
         word = 'small'
