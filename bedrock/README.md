@@ -66,3 +66,14 @@ also different minerals. So by 'Grain size', we mean only words like 'fine',
 'medium', 'coarse'--or even the numerical grain sizes given by some drillers.
 Also, 'shale' is just lithified 'clay', but we consider them as different
 materials rather than the same material with different strengths.
+
+...
+
+```bash
+tippecanoe -o data/2020-02-07_OKRIP.mbtiles \
+  -b 20 -z 9 -g 2 -m150000 \
+  --drop-densest-as-needed --extend-zooms-if-still-dropping \
+  data/rippability_map.geojson
+Layer name: rippability_map
+Mapbox tileset ID: jhembd.8rpw4r9q
+```
