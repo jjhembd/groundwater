@@ -36,13 +36,13 @@ def processFiles():
     logs = pandas.read_csv('data/Reported_Well_Logs.csv')
     data = main.merge(logs, left_on='SITE_ID', right_on='WELL_ID')
 
-    rips = pandas.read_csv('data/shallow_rippability.csv')
+    rips = pandas.read_csv('data/avg_rippability_0-20.csv')
     merge = data.merge(rips, left_on='SITE_ID', right_on='SITE_ID')
 
     print('Finished data merging. Writing to output file...')
 
     # Initialize the GeoJSON
-    f =  open('data/rippability_map.geojson', "w")
+    f =  open('data/avg_rippability_0-20.geojson', "w")
     f.write('{"type": "FeatureCollection", "features": [\n')
 
     # Write out the desired fields, renaming as needed

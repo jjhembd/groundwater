@@ -77,3 +77,66 @@ tippecanoe -o data/2020-02-07_OKRIP.mbtiles \
 Layer name: rippability_map
 Mapbox tileset ID: jhembd.8rpw4r9q
 ```
+
+## Generating an interpolated map
+We first convert to Web Mercator, so the interpolation filters will be
+isotropic (wrong word?). Using ogr2ogr:
+```bash
+ogr2ogr data/avg_rip_webmerc.geojson -t_srs "EPSG:3857" data/avg_rippability.geojson
+```
+
+Next, for interpolation, we will need to know the extent in Web Mercator. 
+First confirm the layer name:
+```bash
+# ogrinfo data/avg_rip_webmerc.geojson
+INFO: Open of `data/avg_rip_webmerc.geojson'
+      using driver `GeoJSON' successful.
+1: avg_rippability (Point)
+```
+
+Now get a summary of the layer:
+```bash
+# ogrinfo data/avg_rip_webmerc.geojson avg_rippability -so
+INFO: Open of `data/avg_rip_webmerc.geojson'
+      using driver `GeoJSON' successful.
+
+Layer name: avg_rippability
+Geometry: Point
+Feature Count: 138049
+Extent: (-11466139.430207, 3982996.182705) - (-10512476.929808, 4439413.443316)
+...
+```
+
+As a first try of interpolation, we test `gdal_grid`:
+```bash
+gdal_grid -a invdist:power=2.0:smoothing=1.0:radius1=1000:radius2=1000 \
+  -txe -11467000 -10512000 -tye 3982000 4440000 -outsize 955 458 \
+  -of GTiff -l avg_rippability -zfield "Rippability" \
+  data/avg_rip_webmerc.geojson data/avg_rip_1000x1000.tiff
+```
+
+BUT this doesn't look good... need some way of QC'ing raw values of the
+interpolation--maybe not TIFF output?
+Reference: https://gdal.org/programs/gdal_grid.html#interpolation-algorithms
+
+This works on a 5-point test file:
+gdal_grid -l rippability -zfield Rippability test_rip.geojson test_grid.tiff
+
+QC as follows: first check an XYZ file:
+gdal_translate -of XYZ test_grid.tiff test_grid.xyz
+
+Then an auto-scaled PNG:
+gdal_translate -of PNG -scale test_grid.tiff test_grid.png
+
+BUT this result is all zero in the z-column:
+gdal_translate -of XYZ -scale avg_rip_1000x1000.tiff avg_rip_1000x100_t2.xyz
+
+A flow that works, though awkward:
+0. Convert to the Oklahoma North state plane projection
+ogr2ogr avg_rip_stateplane.geojson -t_srs "EPSG:6552" avg_rippability.geojson 
+1. Linear interpolation
+gdal_grid -a linear:radius=1000 -l rippability -zfield Rippability -outsize 2048 1024 avg_rip_stateplane.geojson avg_rip_stateplane_t6.tiff
+2. Flip the y-axis
+gdalwarp avg_rip_stateplane_t6.tiff avg_rip_stateplane_t6flip.tiff
+3. Convert to PNG
+gdal_translate -of PNG -scale avg_rip_stateplane_t6flip.tiff avg_rip_stateplane_t6.png
