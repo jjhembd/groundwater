@@ -18,12 +18,15 @@ shallow = lith.loc[lith['LITHO_TOP'].map(is_shallow)] \
 shallow['thickness'] = shallow['LITHO_BOT'].clip(0, maxz) - shallow['LITHO_TOP']
 shallow['norm_rip'] = shallow['RIPPABILITY'] * shallow['thickness'] / maxz
 
-# Discard wells that do not sample the entire interval [0, maxz]
-complete = shallow.groupby('SITE_ID') \
-        .filter(lambda x: x['thickness'].sum() == maxz)
+sums = shallow.groupby('SITE_ID')[['thickness', 'norm_rip']].agg(sum)
+complete = sums.loc[sums['thickness'] == maxz].reset_index()
+complete.columns = ['SITE_ID', 'thickness', 'RIPPABILITY']
 
-# Sum the normalized rippability at each well
-avg_rip = complete.groupby('SITE_ID')['norm_rip'].agg(sum)
+# Read the logs file, and merge to get longitude / latitude
+logs = pandas.read_csv('data/Reported_Well_Logs.csv')
+merge = logs.merge(complete, left_on='WELL_ID', right_on='SITE_ID')
 
-# Write out to a new CSV
-avg_rip.to_csv('data/avg_rippability_0-20.csv', header=['RIPPABILITY'])
+# Write out to a new CSV file
+outfile = 'data/lonlatrip_0-20_t2.csv'
+columns = ['SITE_ID', 'LONGITUDE', 'LATITUDE', 'RIPPABILITY']
+merge[columns].to_csv(outfile, encoding='utf-8', index=False)

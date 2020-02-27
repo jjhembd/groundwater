@@ -4,7 +4,7 @@ import web_mercator
 import gaussian_interp
 import webmerc_tif
 
-rips = pandas.read_csv('data/lonlatrip_0-20.csv')
+rips = pandas.read_csv('data/lonlatrip_0-20_t2.csv')
 
 # Project to Web Mercator
 xyv = pandas.DataFrame({
@@ -24,4 +24,4 @@ values, sampling = gaussian_interp.grid_data(xyv, x, y, kernel_radius)
 
 vals32bit = values.astype(numpy.float32)
 
-webmerc_tif.write('data/rippability_0-20_t4.tif', x, y, vals32bit)
+webmerc_tif.write('data/rippability_0-20_t5.tif', x, y, vals32bit)
